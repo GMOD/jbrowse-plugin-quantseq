@@ -82,7 +82,13 @@
             "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz.gzi"
           }
         }
-      }
+      },
+      "displays": [
+        {
+          "displayId": "gwas_display",
+          "type": "ImportanceDisplay"
+        }
+      ]
     }
   ],
   "plugins": [
