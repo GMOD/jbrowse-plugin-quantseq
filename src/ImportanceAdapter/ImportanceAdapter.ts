@@ -82,12 +82,16 @@ export default class ImportanceAdapter extends BaseFeatureDataAdapter {
         const featureEnd = feature.get('end')
 
         for (let i = featureStart; i < featureEnd; i++) {
-          scoreArray[i - region.start] = {
-            base: seqString[i - region.start],
-            score: feature.get('score'),
+          if (i - region.start >= 0 && i - region.start < scoreArray.length) {
+            scoreArray[i - region.start] = {
+              base: seqString[i - region.start],
+              score: feature.get('score'),
+            }
           }
         }
       })
+
+      console.log(scoreArray)
 
       // return features
       scoreArray.forEach((score, i) => {
