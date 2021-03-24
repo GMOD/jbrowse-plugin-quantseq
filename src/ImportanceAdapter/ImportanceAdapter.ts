@@ -5,14 +5,10 @@ import {
 import { AnyConfigurationModel } from '@jbrowse/core/configuration/configurationSchema'
 import { getSubAdapterType } from '@jbrowse/core/data_adapters/dataAdapterCache'
 import { NoAssemblyRegion } from '@jbrowse/core/util/types'
-import { openLocation } from '@jbrowse/core/util/io'
 import { ObservableCreate } from '@jbrowse/core/util/rxjs'
 import SimpleFeature, { Feature } from '@jbrowse/core/util/simpleFeature'
-import { map, mergeAll, toArray } from 'rxjs/operators'
+import { toArray } from 'rxjs/operators'
 import { readConfObject } from '@jbrowse/core/configuration'
-import { rectifyStats, UnrectifiedFeatureStats } from '@jbrowse/core/util/stats'
-
-import configSchema from './configSchema'
 
 interface WiggleOptions extends BaseOptions {
   resolution?: number
@@ -65,6 +61,8 @@ export default class ImportanceAdapter extends BaseFeatureDataAdapter {
     } = opts
     return ObservableCreate<Feature>(async observer => {
       // wig features (quantitative array)
+      // const newOpts = { ...opts, scale: 10 }
+      // this gives binned features Array [1-500 : score], [500-1000: score]
       const features = this.wiggleAdapter.getFeatures(region, opts)
       const featureArray = await features.pipe(toArray()).toPromise()
 
@@ -72,17 +70,39 @@ export default class ImportanceAdapter extends BaseFeatureDataAdapter {
       const sequence = this.sequenceAdapter.getFeatures(region, opts)
       const sequenceFeatureArray = await sequence.pipe(toArray()).toPromise()
 
-      console.log({ featureArray, sequenceFeatureArray })
+      // console.log({ featureArray, sequenceFeatureArray })
+      // console.log(sequenceFeatureArray[0].data)
+      // console.log({ refName, start, end })
+
+      const seqString = sequenceFeatureArray[0].get('seq')
+      const scoreArray = new Array(region.end - region.start)
+      // @ts-ignore
+      features.forEach((feature: any) => {
+        const featureStart = feature.get('start')
+        const featureEnd = feature.get('end')
+
+        for (let i = featureStart; i < featureEnd; i++) {
+          scoreArray[i - region.start] = {
+            base: seqString[i - region.start],
+            score: feature.get('score'),
+          }
+        }
+      })
+
+      // return features
+      scoreArray.forEach((score, i) => {
+        const start = region.start + i
+        const end = region.start + i + 1
+        observer.next(
+          new SimpleFeature({
+            id: `${refName} ${start}-${end}`,
+            data: { refName, start, end, ...score },
+          }),
+        )
+      })
+      observer.complete()
     }, signal)
   }
 
   public freeResources(): void {}
 }
-
-// const myarray = new Array(region.end-region.start)
-// features.forEach(feature => {
-// })
-// inside there
-// feature.get('start')-region.start
-// index
-// myarray[index]++
