@@ -44,21 +44,16 @@ export default class ImportanceAdapter extends BaseFeatureDataAdapter {
   }
 
   public async getRefNames(opts?: BaseOptions) {
-    return this.wiggleAdapter.getRefNames()
+    return this.wiggleAdapter.getRefNames(opts)
   }
 
   public async getGlobalStats(opts?: BaseOptions) {
-    return this.wiggleAdapter.getGlobalStats()
+    return this.wiggleAdapter.getGlobalStats(opts)
   }
 
   public getFeatures(region: NoAssemblyRegion, opts: WiggleOptions = {}) {
-    const { refName, start, end } = region
-    const {
-      bpPerPx = 0,
-      signal,
-      resolution = 1,
-      statusCallback = () => {},
-    } = opts
+    const { refName } = region
+    const { signal } = opts
     return ObservableCreate<Feature>(async observer => {
       // wig features (quantitative array)
       // const newOpts = { ...opts, scale: 10 }
@@ -77,7 +72,7 @@ export default class ImportanceAdapter extends BaseFeatureDataAdapter {
       const seqString = sequenceFeatureArray[0].get('seq')
       const scoreArray = new Array(region.end - region.start)
       // @ts-ignore
-      features.forEach((feature: any) => {
+      featureArray.forEach((feature: any) => {
         const featureStart = feature.get('start')
         const featureEnd = feature.get('end')
 
