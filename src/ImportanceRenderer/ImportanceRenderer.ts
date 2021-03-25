@@ -1,6 +1,5 @@
 import PluginManager from '@jbrowse/core/PluginManager'
-import { readConfObject } from '@jbrowse/core/configuration'
-import { max } from 'rxjs/operators'
+import { getOrigin, getColor } from '../util'
 
 export default function rendererFactory(pluginManager: PluginManager) {
   const WigglePlugin = pluginManager.getPlugin(
@@ -20,7 +19,6 @@ export default function rendererFactory(pluginManager: PluginManager) {
         features,
         regions,
         bpPerPx,
-        config,
         scaleOpts,
         height: unadjustedHeight,
         displayCrossHatches,
@@ -31,23 +29,22 @@ export default function rendererFactory(pluginManager: PluginManager) {
       const height = unadjustedHeight - YSCALEBAR_LABEL_OFFSET * 2
       const opts = { ...scaleOpts, range: [0, height] }
       const width = (region.end - region.start) / bpPerPx
-
+      const originY = getOrigin(scaleOpts.scaleType)
       const scale = getScale(opts)
+
       const toY = (n: number) => height - scale(n) + YSCALEBAR_LABEL_OFFSET
+      const toHeight = (n: number) => toY(originY) - toY(n)
 
       ctx.textAlign = 'center'
       for (const feature of features.values()) {
-        console.log(feature)
         const [leftPx, rightPx] = featureSpanPx(feature, region, bpPerPx)
+        const w = rightPx - leftPx + 0.4 // fudge factor for subpixel rendering
         const score = feature.get('score') as number
-        ctx.fillStyle = readConfObject(config, 'color', [feature])
-        console.log(toY(score) / height)
-        // ctx.setTransform(1, 0, 0, 1, 0, 0)
-        ctx.fillText(
-          feature.get('base'),
-          leftPx + (rightPx - leftPx) / 2,
-          height,
-        )
+        const base = feature.get('base')
+        ctx.fillStyle = getColor(base)
+        ctx.fillRect(leftPx, toY(score), w, toHeight(score))
+        ctx.fillStyle = '#000'
+        ctx.fillText(base, leftPx + (rightPx - leftPx) / 2, toY(score) - 2)
       }
 
       if (displayCrossHatches) {
