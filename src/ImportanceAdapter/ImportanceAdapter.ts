@@ -55,19 +55,10 @@ export default class ImportanceAdapter extends BaseFeatureDataAdapter {
     const { refName } = region
     const { signal } = opts
     return ObservableCreate<Feature>(async observer => {
-      // wig features (quantitative array)
-      // const newOpts = { ...opts, scale: 10 }
-      // this gives binned features Array [1-500 : score], [500-1000: score]
       const features = this.wiggleAdapter.getFeatures(region, opts)
-      const featureArray = await features.pipe(toArray()).toPromise()
-
-      // sequence features (features have .get('seq'))
       const sequence = this.sequenceAdapter.getFeatures(region, opts)
+      const featureArray = await features.pipe(toArray()).toPromise()
       const sequenceFeatureArray = await sequence.pipe(toArray()).toPromise()
-
-      // console.log({ featureArray, sequenceFeatureArray })
-      // console.log(sequenceFeatureArray[0].data)
-      // console.log({ refName, start, end })
 
       const seqString = sequenceFeatureArray[0].get('seq')
       const scoreArray = new Array(region.end - region.start)
@@ -86,9 +77,6 @@ export default class ImportanceAdapter extends BaseFeatureDataAdapter {
         }
       })
 
-      console.log(scoreArray)
-
-      // return features
       scoreArray.forEach((score, i) => {
         const start = region.start + i
         const end = region.start + i + 1
