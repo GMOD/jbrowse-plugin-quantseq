@@ -12,6 +12,7 @@ export function getOrigin(scaleType: string) {
 Gets the correct color for a given base
 */
 export function getColor(base: string) {
+  base = base.toUpperCase()
   if (base === 'T') {
     return '#f44336'
   } else if (base === 'A') {
