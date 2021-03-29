@@ -60,6 +60,10 @@ export default class ImportanceAdapter extends BaseFeatureDataAdapter {
       const featureArray = await features.pipe(toArray()).toPromise()
       const sequenceFeatureArray = await sequence.pipe(toArray()).toPromise()
 
+      console.log(region)
+      console.log(sequence)
+      console.log(sequenceFeatureArray)
+
       const seqString = sequenceFeatureArray[0].get('seq')
       const scoreArray = new Array(region.end - region.start)
       // @ts-ignore
