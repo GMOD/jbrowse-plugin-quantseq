@@ -1,20 +1,20 @@
 {
   "assemblies": [{
-    "name": "hg19",
-    "aliases": ["GRCh37"],
+    "name": "hg38",
+    "aliases": ["GRCh38"],
     "sequence": {
       "type": "ReferenceSequenceTrack",
-      "trackId": "Pd8Wh30ei9R",
+      "trackId": "P6R5xbRqRr",
       "adapter": {
         "type": "BgzipFastaAdapter",
         "fastaLocation": {
-          "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz"
+          "uri": "https://jbrowse.org/genomes/GRCh38/fasta/hg38.prefix.fa.gz"
         },
         "faiLocation": {
-          "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz.fai"
+          "uri": "https://jbrowse.org/genomes/GRCh38/fasta/hg38.prefix.fa.gz.fai"
         },
         "gziLocation": {
-          "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz.gzi"
+          "uri": "https://jbrowse.org/genomes/GRCh38/fasta/hg38.prefix.fa.gz.gzi"
         }
       }
     },
@@ -22,7 +22,7 @@
       "adapter": {
         "type": "RefNameAliasAdapter",
         "location": {
-          "uri": "https://s3.amazonaws.com/jbrowse.org/genomes/hg19/hg19_aliases.txt"
+          "uri": "https://s3.amazonaws.com/jbrowse.org/genomes/GRCh38/hg38_aliases.txt"
         }
       }
     }
@@ -32,7 +32,7 @@
       "type": "QuantitativeTrack",
       "trackId": "ngmlr_cov",
       "name": "Nanog importance counts (BPNet)",
-      "assemblyNames": ["hg19"],
+      "assemblyNames": ["hg38"],
       "adapter": {
         "type": "ImportanceAdapter",
         "wiggleAdapter": {
@@ -43,15 +43,15 @@
         },
         "sequenceAdapter": {
           "type": "BgzipFastaAdapter",
-          "fastaLocation": {
-            "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz"
-          },
-          "faiLocation": {
-            "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz.fai"
-          },
-          "gziLocation": {
-            "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz.gzi"
-          }
+        "fastaLocation": {
+          "uri": "https://jbrowse.org/genomes/GRCh38/fasta/hg38.prefix.fa.gz"
+        },
+        "faiLocation": {
+          "uri": "https://jbrowse.org/genomes/GRCh38/fasta/hg38.prefix.fa.gz.fai"
+        },
+        "gziLocation": {
+          "uri": "https://jbrowse.org/genomes/GRCh38/fasta/hg38.prefix.fa.gz.gzi"
+        }
         }
       },
       "displays": [
