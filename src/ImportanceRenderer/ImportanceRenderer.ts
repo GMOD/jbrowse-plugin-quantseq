@@ -44,7 +44,9 @@ export default function rendererFactory(pluginManager: PluginManager) {
         ctx.fillStyle = getColor(base)
         ctx.fillRect(leftPx, toY(score), w, toHeight(score))
         ctx.fillStyle = '#000'
-        ctx.fillText(base, leftPx + (rightPx - leftPx) / 2, toY(score) - 2)
+        if (1 / bpPerPx > 10) {
+          ctx.fillText(base, leftPx + (rightPx - leftPx) / 2, toY(score) - 2)
+        }
       }
 
       if (displayCrossHatches) {
