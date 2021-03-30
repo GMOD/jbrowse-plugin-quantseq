@@ -29,45 +29,16 @@
   }],
   "tracks": [
     {
-      "type": "AlignmentsTrack",
-      "trackId": "reads_lr_skbr3.fa_ngmlr-0.2.3_mapped.down",
-      "name": "SKBR3 pacbio (NGMLR) 0.3 downsample (CRAM)",
-      "assemblyNames": ["hg19"],
-      "category": ["SKBR3"],
-      "adapter": {
-        "type": "CramAdapter",
-        "cramLocation": {
-          "uri": "https://s3.amazonaws.com/jbrowse.org/genomes/hg19/skbr3/reads_lr_skbr3.fa_ngmlr-0.2.3_mapped.down.cram"
-        },
-        "craiLocation": {
-          "uri": "https://s3.amazonaws.com/jbrowse.org/genomes/hg19/skbr3/reads_lr_skbr3.fa_ngmlr-0.2.3_mapped.down.cram.crai"
-        },
-        "sequenceAdapter": {
-          "type": "BgzipFastaAdapter",
-          "fastaLocation": {
-            "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz"
-          },
-          "faiLocation": {
-            "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz.fai"
-          },
-          "gziLocation": {
-            "uri": "https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz.gzi"
-          }
-        }
-      }
-    },
-    {
       "type": "QuantitativeTrack",
       "trackId": "ngmlr_cov",
-      "name": "SKBR3 pacbio coverage (NGMLR)",
+      "name": "Nanog importance counts (BPNet)",
       "assemblyNames": ["hg19"],
-      "category": ["SKBR3"],
       "adapter": {
         "type": "ImportanceAdapter",
         "wiggleAdapter": {
           "type": "BigWigAdapter",
           "bigWigLocation": {
-            "uri": "https://www.encodeproject.org/files/ENCFF303QSJ/@@download/ENCFF303QSJ.bigWig"
+            "uri": "https://jbrowse.org/genomes/GRCh38/BPNet/Nanog.importance.counts.bw"
           }
         },
         "sequenceAdapter": {
@@ -85,7 +56,7 @@
       },
       "displays": [
         {
-          "displayId": "gwas_display",
+          "displayId": "importance_display",
           "type": "ImportanceDisplay"
         }
       ]
