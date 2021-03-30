@@ -51,18 +51,20 @@ export default class ImportanceAdapter extends BaseFeatureDataAdapter {
     return this.wiggleAdapter.getGlobalStats(opts)
   }
 
-  public getFeatures(region: NoAssemblyRegion, opts: WiggleOptions = {}) {
+  public getFeatures(
+    region: NoAssemblyRegion & { originalRefName?: string },
+    opts: WiggleOptions = {},
+  ) {
     const { refName } = region
     const { signal } = opts
     return ObservableCreate<Feature>(async observer => {
       const features = this.wiggleAdapter.getFeatures(region, opts)
-      const sequence = this.sequenceAdapter.getFeatures(region, opts)
+      const sequence = this.sequenceAdapter.getFeatures(
+        { ...region, refName: region.originalRefName },
+        opts,
+      )
       const featureArray = await features.pipe(toArray()).toPromise()
       const sequenceFeatureArray = await sequence.pipe(toArray()).toPromise()
-
-      console.log(region)
-      console.log(sequence)
-      console.log(sequenceFeatureArray)
 
       const seqString = sequenceFeatureArray[0].get('seq')
       const scoreArray = new Array(region.end - region.start)
