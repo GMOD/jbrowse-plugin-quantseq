@@ -1,4 +1,6 @@
 import PluginManager from '@jbrowse/core/PluginManager'
+import { getContainingView } from '@jbrowse/core/util'
+import { LinearGenomeViewModel } from '@jbrowse/plugin-linear-genome-view'
 
 export function configSchemaFactory(pluginManager: PluginManager) {
   const { types } = pluginManager.lib['mobx-state-tree']
@@ -83,12 +85,19 @@ export function stateModelFactory(
       .model({
         type: types.literal('ImportanceDisplay'),
       })
-      .views(() => ({
+      .views(self => ({
         get rendererTypeName() {
           return 'ImportanceRenderer'
         },
         get needsScalebar() {
           return true
+        },
+        regionCannotBeRendered(/* region */) {
+          const view = getContainingView(self) as LinearGenomeViewModel
+          if (view && view.bpPerPx >= 1) {
+            return 'Zoom in to see sequence'
+          }
+          return undefined
         },
       })),
   )
