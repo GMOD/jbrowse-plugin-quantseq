@@ -16,5 +16,5 @@ base-resolution, such as the predictions of the [BPNet](https://github.com/kunda
 
 ## Contributing
 
-We welcome an contributions or PRs to this repo. Developer information for this
+We welcome any contributions or PRs to this repo. Developer information for this
 codebase can be found [here](https://github.com/elliothershberg/jbrowse-plugin-quantseq/blob/main/CONTRIBUTING.md)
