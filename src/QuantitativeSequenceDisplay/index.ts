@@ -1,6 +1,4 @@
 import PluginManager from '@jbrowse/core/PluginManager'
-import { getContainingView } from '@jbrowse/core/util'
-import { LinearGenomeViewModel } from '@jbrowse/plugin-linear-genome-view'
 
 export function configSchemaFactory(pluginManager: PluginManager) {
   const { types } = pluginManager.lib['mobx-state-tree']
@@ -85,7 +83,7 @@ export function stateModelFactory(
       .model({
         type: types.literal('QuantitativeSequenceDisplay'),
       })
-      .views(self => ({
+      .views(() => ({
         get rendererTypeName() {
           return 'QuantitativeSequenceRenderer'
         },
