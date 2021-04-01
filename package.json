@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1",
+  "version": "0.0.2",
   "name": "jbrowse-plugin-quantseq",
   "keywords": [
     "jbrowse",
@@ -20,7 +20,7 @@
     "build": "tsdx build --format cjs,esm,umd --name JBrowsePluginQuantseq",
     "browse-install": "cd .jbrowse && rm -rf * && jbrowse create .",
     "browse": "cd .jbrowse && cp ../jbrowse_config.json . && mv jbrowse_config.json config.json && npx serve .",
-    "test": "tsdx test",
+    "test": "tsdx test --passWithNoTests",
     "test:cy": "cypress run --headless --browser chrome",
     "e2e": "start-test start 9000 browse 5000 test:cy",
     "cypress": "cypress open",
@@ -69,8 +69,8 @@
     "tslib": "^2.0.3",
     "typescript": "^4.1.3"
   },
-  "private": true,
-  "repository": "https://github.com/elliothershberg/jbrowse-plugin-quantseq.git",
+  "private": false,
+  "repository": "https://github.com/GMOD/jbrowse-plugin-quantseq.git",
   "author": "Elliot Hershberg <eahershberg@gmail.com>",
   "license": "MIT"
 }
