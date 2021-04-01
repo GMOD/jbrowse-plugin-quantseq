@@ -92,13 +92,6 @@ export function stateModelFactory(
         get needsScalebar() {
           return true
         },
-        regionCannotBeRendered(/* region */) {
-          const view = getContainingView(self) as LinearGenomeViewModel
-          if (view && view.bpPerPx >= 1) {
-            return 'Zoom in to see sequence'
-          }
-          return undefined
-        },
       })),
   )
 }

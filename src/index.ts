@@ -5,7 +5,7 @@ import AdapterType from '@jbrowse/core/pluggableElementTypes/AdapterType'
 import { AdapterClass, configSchema } from './QuantitativeSequenceAdapter'
 
 import rendererFactory, {
-  configSchema as QuantitativeSequenceRendererConfigSchema,
+  configSchemaFactory as QuantitativeSequenceRendererConfigSchemaFactory,
 } from './QuantitativeSequenceRenderer'
 import {
   configSchemaFactory as QuantitativeSequenceDisplayConfigSchemaFactory,
@@ -58,7 +58,9 @@ export default class MyProjectPlugin extends Plugin {
     pluginManager.addRendererType(() => {
       //@ts-ignore
       const QuantitativeSequenceRenderer = new rendererFactory(pluginManager)
-      const configSchema = QuantitativeSequenceRendererConfigSchema
+      const configSchema = QuantitativeSequenceRendererConfigSchemaFactory(
+        pluginManager,
+      )
       return new QuantitativeSequenceRenderer({
         name: 'QuantitativeSequenceRenderer',
         ReactComponent: XYPlotRendererReactComponent,

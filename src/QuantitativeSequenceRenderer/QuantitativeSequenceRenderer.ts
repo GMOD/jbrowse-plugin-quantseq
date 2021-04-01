@@ -7,13 +7,14 @@ export default function rendererFactory(pluginManager: PluginManager) {
   ) as import('@jbrowse/plugin-wiggle').default
   const {
     utils: { getScale },
-    WiggleBaseRenderer,
+    //@ts-ignore
+    XYPlotRenderer,
     //@ts-ignore
   } = WigglePlugin.exports
 
   const { featureSpanPx } = pluginManager.lib['@jbrowse/core/util']
 
-  return class QuantitativeSequenceRenderer extends WiggleBaseRenderer {
+  return class QuantitativeSequenceRenderer extends XYPlotRenderer {
     draw(ctx: CanvasRenderingContext2D, props: any) {
       const {
         features,
@@ -32,9 +33,16 @@ export default function rendererFactory(pluginManager: PluginManager) {
       const originY = getOrigin(scaleOpts.scaleType)
       const scale = getScale(opts)
 
+      if (region.end - region.start > 5000) {
+        console.log('using super')
+        super.draw(ctx, props)
+        return
+      }
+
       const toY = (n: number) => height - scale(n) + YSCALEBAR_LABEL_OFFSET
       const toHeight = (n: number) => toY(originY) - toY(n)
 
+      console.log({ features })
       ctx.textAlign = 'center'
       for (const feature of features.values()) {
         const [leftPx, rightPx] = featureSpanPx(feature, region, bpPerPx)
@@ -44,7 +52,7 @@ export default function rendererFactory(pluginManager: PluginManager) {
         ctx.fillStyle = getColor(base)
         ctx.fillRect(leftPx, toY(score), w, toHeight(score))
         ctx.fillStyle = '#000'
-        if (1 / bpPerPx > 10) {
+        if (1 / bpPerPx > 5) {
           ctx.fillText(base, leftPx + (rightPx - leftPx) / 2, toY(score) - 2)
         }
       }
