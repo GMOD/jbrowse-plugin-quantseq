@@ -64,8 +64,8 @@
   ],
   "plugins": [
     {
-      "name": "MyProject",
-      "url": "http://localhost:9000/dist/jbrowse-plugin-my-project.umd.development.js"
+      "name": "Quantseq",
+      "url": "http://localhost:9000/dist/jbrowse-plugin-quantseq.umd.development.js"
     }
   ]
 }
