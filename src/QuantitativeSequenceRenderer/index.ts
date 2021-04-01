@@ -1,8 +1,8 @@
 import { ConfigurationSchema } from '@jbrowse/core/configuration'
-export { default } from './ImportanceRenderer'
+export { default } from './QuantitativeSequenceRenderer'
 
 export const configSchema = ConfigurationSchema(
-  'ImportanceRenderer',
+  'QuantitativeSequenceRenderer',
   {},
   { explicitlyTyped: true },
 )

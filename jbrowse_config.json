@@ -34,7 +34,7 @@
       "name": "Nanog importance counts (BPNet)",
       "assemblyNames": ["hg38"],
       "adapter": {
-        "type": "ImportanceAdapter",
+        "type": "QuantitativeSequenceAdapter",
         "wiggleAdapter": {
           "type": "BigWigAdapter",
           "bigWigLocation": {
@@ -56,8 +56,8 @@
       },
       "displays": [
         {
-          "displayId": "importance_display",
-          "type": "ImportanceDisplay"
+          "displayId": "QuantitativeSequence_display",
+          "type": "QuantitativeSequenceDisplay"
         }
       ]
     }

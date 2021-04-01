@@ -1,7 +1,7 @@
 import { ConfigurationSchema } from '@jbrowse/core/configuration'
 
 export default ConfigurationSchema(
-  'ImportanceAdapter',
+  'QuantitativeSequenceAdapter',
   {
     sequenceAdapter: {
       type: 'frozen',

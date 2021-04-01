@@ -1,4 +1,4 @@
-![Integration](https://github.com/elliothershberg/importance-tracks/workflows/Integration/badge.svg?branch=main)
+![Integration](https://github.com/elliothershberg/jbrowse-plugin-quantseq/workflows/Integration/badge.svg?branch=main)
 
 # jbrowse-plugin-my-project
 

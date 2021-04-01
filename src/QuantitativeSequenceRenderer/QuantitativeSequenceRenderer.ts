@@ -13,7 +13,7 @@ export default function rendererFactory(pluginManager: PluginManager) {
 
   const { featureSpanPx } = pluginManager.lib['@jbrowse/core/util']
 
-  return class ImportanceRenderer extends WiggleBaseRenderer {
+  return class QuantitativeSequenceRenderer extends WiggleBaseRenderer {
     draw(ctx: CanvasRenderingContext2D, props: any) {
       const {
         features,

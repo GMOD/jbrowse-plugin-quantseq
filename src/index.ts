@@ -2,15 +2,15 @@ import Plugin from '@jbrowse/core/Plugin'
 import PluginManager from '@jbrowse/core/PluginManager'
 import { version } from '../package.json'
 import AdapterType from '@jbrowse/core/pluggableElementTypes/AdapterType'
-import { AdapterClass, configSchema } from './ImportanceAdapter'
+import { AdapterClass, configSchema } from './QuantitativeSequenceAdapter'
 
 import rendererFactory, {
-  configSchema as ImportanceRendererConfigSchema,
-} from './ImportanceRenderer'
+  configSchema as QuantitativeSequenceRendererConfigSchema,
+} from './QuantitativeSequenceRenderer'
 import {
-  configSchemaFactory as ImportanceDisplayConfigSchemaFactory,
-  stateModelFactory as ImportanceDisplayModelFactory,
-} from './ImportanceDisplay'
+  configSchemaFactory as QuantitativeSequenceDisplayConfigSchemaFactory,
+  stateModelFactory as QuantitativeSequenceDisplayModelFactory,
+} from './QuantitativeSequenceDisplay'
 
 export default class MyProjectPlugin extends Plugin {
   name = 'MyProject'
@@ -32,18 +32,23 @@ export default class MyProjectPlugin extends Plugin {
     pluginManager.addAdapterType(
       () =>
         new AdapterType({
-          name: 'ImportanceAdapter',
+          name: 'QuantitativeSequenceAdapter',
           AdapterClass,
           configSchema,
         }),
     )
 
     pluginManager.addDisplayType(() => {
-      const configSchema = ImportanceDisplayConfigSchemaFactory(pluginManager)
+      const configSchema = QuantitativeSequenceDisplayConfigSchemaFactory(
+        pluginManager,
+      )
       return new DisplayType({
-        name: 'ImportanceDisplay',
+        name: 'QuantitativeSequenceDisplay',
         configSchema,
-        stateModel: ImportanceDisplayModelFactory(pluginManager, configSchema),
+        stateModel: QuantitativeSequenceDisplayModelFactory(
+          pluginManager,
+          configSchema,
+        ),
         trackType: 'FeatureTrack',
         viewType: 'LinearGenomeView',
         ReactComponent: LinearWiggleDisplayReactComponent,
@@ -52,10 +57,10 @@ export default class MyProjectPlugin extends Plugin {
 
     pluginManager.addRendererType(() => {
       //@ts-ignore
-      const ImportanceRenderer = new rendererFactory(pluginManager)
-      const configSchema = ImportanceRendererConfigSchema
-      return new ImportanceRenderer({
-        name: 'ImportanceRenderer',
+      const QuantitativeSequenceRenderer = new rendererFactory(pluginManager)
+      const configSchema = QuantitativeSequenceRendererConfigSchema
+      return new QuantitativeSequenceRenderer({
+        name: 'QuantitativeSequenceRenderer',
         ReactComponent: XYPlotRendererReactComponent,
         configSchema,
         pluginManager,

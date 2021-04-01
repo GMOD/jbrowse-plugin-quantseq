@@ -14,7 +14,7 @@ interface WiggleOptions extends BaseOptions {
   resolution?: number
 }
 
-export default class ImportanceAdapter extends BaseFeatureDataAdapter {
+export default class QuantitativeSequenceAdapter extends BaseFeatureDataAdapter {
   public static capabilities = [
     'hasResolution',
     'hasLocalStats',

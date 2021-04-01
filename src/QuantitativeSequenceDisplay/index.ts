@@ -15,7 +15,7 @@ export function configSchemaFactory(pluginManager: PluginManager) {
   const { baseLinearDisplayConfigSchema } = LGVPlugin.exports
 
   return ConfigurationSchema(
-    'ImportanceDisplay',
+    'QuantitativeSequenceDisplay',
     {
       autoscale: {
         type: 'stringEnum',
@@ -79,15 +79,15 @@ export function stateModelFactory(
   //@ts-ignore
   const { linearWiggleDisplayModelFactory } = WigglePlugin.exports
   return types.compose(
-    'ImportanceDisplay',
+    'QuantitativeSequenceDisplay',
     linearWiggleDisplayModelFactory(pluginManager, configSchema),
     types
       .model({
-        type: types.literal('ImportanceDisplay'),
+        type: types.literal('QuantitativeSequenceDisplay'),
       })
       .views(self => ({
         get rendererTypeName() {
-          return 'ImportanceRenderer'
+          return 'QuantitativeSequenceRenderer'
         },
         get needsScalebar() {
           return true
@@ -103,4 +103,6 @@ export function stateModelFactory(
   )
 }
 
-export type ImportanceDisplayModel = ReturnType<typeof stateModelFactory>
+export type QuantitativeSequenceDisplayModel = ReturnType<
+  typeof stateModelFactory
+>
