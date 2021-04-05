@@ -22,7 +22,7 @@ No installation required
 ### For use in [`@jbrowse/react-linear-view`](https://www.npmjs.com/package/@jbrowse/react-linear-genome-view)
 
 ```
-yarn add jbrowse-plugin-gdc
+yarn add jbrowse-plugin-quantseq
 ```
 
 ## Usage
