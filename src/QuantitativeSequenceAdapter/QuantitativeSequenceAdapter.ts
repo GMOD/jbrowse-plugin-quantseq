@@ -24,30 +24,31 @@ export default class QuantitativeSequenceAdapter extends BaseFeatureDataAdapter 
   private sequenceAdapter: any
   private wiggleAdapter: any
 
-  public constructor(
-    config: AnyConfigurationModel,
-    getSubAdapter?: getSubAdapterType,
-  ) {
-    super(config)
-
-    const sequenceAdapterConfig = readConfObject(config, 'sequenceAdapter')
-    if (sequenceAdapterConfig && getSubAdapter) {
-      const { dataAdapter } = getSubAdapter(sequenceAdapterConfig)
+  private async setup() {
+    //@ts-ignore
+    const sequenceAdapterConfig = readConfObject(this.config, 'sequenceAdapter')
+    if (sequenceAdapterConfig) {
+      //@ts-ignore
+      const { dataAdapter } = await this.getSubAdapter(sequenceAdapterConfig)
       this.sequenceAdapter = dataAdapter as BaseFeatureDataAdapter
     }
 
-    const wiggleAdapterConfig = readConfObject(config, 'wiggleAdapter')
-    if (wiggleAdapterConfig && getSubAdapter) {
-      const { dataAdapter } = getSubAdapter(wiggleAdapterConfig)
+    //@ts-ignore
+    const wiggleAdapterConfig = readConfObject(this.config, 'wiggleAdapter')
+    if (wiggleAdapterConfig) {
+      //@ts-ignore
+      const { dataAdapter } = await this.getSubAdapter(wiggleAdapterConfig)
       this.wiggleAdapter = dataAdapter as BaseFeatureDataAdapter
     }
   }
 
   public async getRefNames(opts?: BaseOptions) {
+    await this.setup()
     return this.wiggleAdapter.getRefNames(opts)
   }
 
   public async getGlobalStats(opts?: BaseOptions) {
+    await this.setup()
     return this.wiggleAdapter.getGlobalStats(opts)
   }
 
