@@ -2,8 +2,6 @@ import {
   BaseFeatureDataAdapter,
   BaseOptions,
 } from '@jbrowse/core/data_adapters/BaseAdapter'
-import { AnyConfigurationModel } from '@jbrowse/core/configuration/configurationSchema'
-import { getSubAdapterType } from '@jbrowse/core/data_adapters/dataAdapterCache'
 import { NoAssemblyRegion } from '@jbrowse/core/util/types'
 import { ObservableCreate } from '@jbrowse/core/util/rxjs'
 import SimpleFeature, { Feature } from '@jbrowse/core/util/simpleFeature'
@@ -24,30 +22,33 @@ export default class QuantitativeSequenceAdapter extends BaseFeatureDataAdapter 
   private sequenceAdapter: any
   private wiggleAdapter: any
 
-  public constructor(
-    config: AnyConfigurationModel,
-    getSubAdapter?: getSubAdapterType,
-  ) {
-    super(config)
-
-    const sequenceAdapterConfig = readConfObject(config, 'sequenceAdapter')
-    if (sequenceAdapterConfig && getSubAdapter) {
-      const { dataAdapter } = getSubAdapter(sequenceAdapterConfig)
+  private async setup() {
+    const sequenceAdapterConfig = readConfObject(this.config, 'sequenceAdapter')
+    if (sequenceAdapterConfig) {
+      if (!this.getSubAdapter) {
+        throw new Error('getSubadapter not available')
+      }
+      const { dataAdapter } = await this.getSubAdapter(sequenceAdapterConfig)
       this.sequenceAdapter = dataAdapter as BaseFeatureDataAdapter
     }
 
-    const wiggleAdapterConfig = readConfObject(config, 'wiggleAdapter')
-    if (wiggleAdapterConfig && getSubAdapter) {
-      const { dataAdapter } = getSubAdapter(wiggleAdapterConfig)
+    const wiggleAdapterConfig = readConfObject(this.config, 'wiggleAdapter')
+    if (wiggleAdapterConfig) {
+      if (!this.getSubAdapter) {
+        throw new Error('getSubadapter not available')
+      }
+      const { dataAdapter } = await this.getSubAdapter(wiggleAdapterConfig)
       this.wiggleAdapter = dataAdapter as BaseFeatureDataAdapter
     }
   }
 
   public async getRefNames(opts?: BaseOptions) {
+    await this.setup()
     return this.wiggleAdapter.getRefNames(opts)
   }
 
   public async getGlobalStats(opts?: BaseOptions) {
+    await this.setup()
     return this.wiggleAdapter.getGlobalStats(opts)
   }
 
@@ -70,7 +71,6 @@ export default class QuantitativeSequenceAdapter extends BaseFeatureDataAdapter 
 
         const seqString = sequenceFeatureArray[0].get('seq')
         const scoreArray = new Array(region.end - region.start)
-        // @ts-ignore
         featureArray.forEach((feature: any) => {
           const featureStart = feature.get('start')
           const featureEnd = feature.get('end')
