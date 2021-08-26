@@ -50,7 +50,7 @@
   "devDependencies": {
     "@babel/preset-react": "^7.10.4",
     "@jbrowse/cli": "^1.0.3",
-    "@jbrowse/core": "^1.0.4",
+    "@jbrowse/core": "^1.3.4",
     "@jbrowse/development-tools": "^1.0.3",
     "@jbrowse/plugin-linear-genome-view": "^1.0.4",
     "@jbrowse/plugin-wiggle": "^1.0.4",
