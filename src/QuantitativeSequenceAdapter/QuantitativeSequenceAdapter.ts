@@ -2,8 +2,6 @@ import {
   BaseFeatureDataAdapter,
   BaseOptions,
 } from '@jbrowse/core/data_adapters/BaseAdapter'
-import { AnyConfigurationModel } from '@jbrowse/core/configuration/configurationSchema'
-import { getSubAdapterType } from '@jbrowse/core/data_adapters/dataAdapterCache'
 import { NoAssemblyRegion } from '@jbrowse/core/util/types'
 import { ObservableCreate } from '@jbrowse/core/util/rxjs'
 import SimpleFeature, { Feature } from '@jbrowse/core/util/simpleFeature'
@@ -25,18 +23,20 @@ export default class QuantitativeSequenceAdapter extends BaseFeatureDataAdapter 
   private wiggleAdapter: any
 
   private async setup() {
-    //@ts-ignore
     const sequenceAdapterConfig = readConfObject(this.config, 'sequenceAdapter')
     if (sequenceAdapterConfig) {
-      //@ts-ignore
+      if (!this.getSubAdapter) {
+        throw new Error('getSubadapter not available')
+      }
       const { dataAdapter } = await this.getSubAdapter(sequenceAdapterConfig)
       this.sequenceAdapter = dataAdapter as BaseFeatureDataAdapter
     }
 
-    //@ts-ignore
     const wiggleAdapterConfig = readConfObject(this.config, 'wiggleAdapter')
     if (wiggleAdapterConfig) {
-      //@ts-ignore
+      if (!this.getSubAdapter) {
+        throw new Error('getSubadapter not available')
+      }
       const { dataAdapter } = await this.getSubAdapter(wiggleAdapterConfig)
       this.wiggleAdapter = dataAdapter as BaseFeatureDataAdapter
     }
@@ -71,7 +71,6 @@ export default class QuantitativeSequenceAdapter extends BaseFeatureDataAdapter 
 
         const seqString = sequenceFeatureArray[0].get('seq')
         const scoreArray = new Array(region.end - region.start)
-        // @ts-ignore
         featureArray.forEach((feature: any) => {
           const featureStart = feature.get('start')
           const featureEnd = feature.get('end')
