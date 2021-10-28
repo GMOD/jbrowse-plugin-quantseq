@@ -42,7 +42,7 @@ export default function rendererFactory(pluginManager: PluginManager) {
       const toHeight = (n: number) => toY(originY) - toY(n)
 
       ctx.textAlign = 'center'
-      ctx.font = '10px sans-serif'
+      ctx.font = 'bold 10px sans-serif'
       for (const feature of features.values()) {
         const [leftPx, rightPx] = featureSpanPx(feature, region, bpPerPx)
         const w = rightPx - leftPx + 0.4 // fudge factor for subpixel rendering
