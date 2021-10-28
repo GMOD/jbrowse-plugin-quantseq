@@ -64,7 +64,7 @@ export default function rendererFactory(pluginManager: PluginManager) {
             0,
             toHeight(score) / 10,
             leftPx * 2 + (rightPx - leftPx),
-            height + (toY(score) - toHeight(score)), // 1, //toY(score),
+            height + (toY(score) - toHeight(score)) - toY(20), // 1, //toY(score),
           )
           // ctx.setTransform(
           //   1,
