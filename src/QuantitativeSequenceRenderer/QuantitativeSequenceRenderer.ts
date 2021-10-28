@@ -34,7 +34,6 @@ export default function rendererFactory(pluginManager: PluginManager) {
       const scale = getScale(opts)
 
       if (region.end - region.start > 5000) {
-        console.log('using super')
         super.draw(ctx, props)
         return
       }
@@ -42,7 +41,6 @@ export default function rendererFactory(pluginManager: PluginManager) {
       const toY = (n: number) => height - scale(n) + YSCALEBAR_LABEL_OFFSET
       const toHeight = (n: number) => toY(originY) - toY(n)
 
-      console.log({ features })
       ctx.textAlign = 'center'
       ctx.font = '10px sans-serif'
       for (const feature of features.values()) {
@@ -54,32 +52,16 @@ export default function rendererFactory(pluginManager: PluginManager) {
         if (1 / bpPerPx < 5) {
           ctx.fillRect(leftPx, toY(score), w, toHeight(score))
         } else {
-          console.log({
-            height: toHeight(score),
-            y: toY(score),
-          })
           ctx.setTransform(
             w / 10,
             0,
             0,
-            toHeight(score) / 10,
+            toHeight(score) / 4,
             leftPx * 2 + (rightPx - leftPx),
-            height + (toY(score) - toHeight(score)) - toY(20), // 1, //toY(score),
+            height + toY(0) / 2 + YSCALEBAR_LABEL_OFFSET,
           )
-          // ctx.setTransform(
-          //   1,
-          //   0,
-          //   0,
-          //   1, // toHeight(score) / 10,
-          //   leftPx, // + (rightPx - leftPx) / 2,
-          //   toY(score) - 2,
-          // )
-          ctx.fillText(
-            base,
-            0, // + (rightPx - leftPx) / 2,
-            20,
-            //toY(score) - 2,
-          )
+
+          ctx.fillText(base, 0, 0)
         }
       }
 
