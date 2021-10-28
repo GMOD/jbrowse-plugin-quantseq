@@ -44,16 +44,42 @@ export default function rendererFactory(pluginManager: PluginManager) {
 
       console.log({ features })
       ctx.textAlign = 'center'
+      ctx.font = '10px sans-serif'
       for (const feature of features.values()) {
         const [leftPx, rightPx] = featureSpanPx(feature, region, bpPerPx)
         const w = rightPx - leftPx + 0.4 // fudge factor for subpixel rendering
         const score = feature.get('score') as number
         const base = feature.get('base')
         ctx.fillStyle = getColor(base)
-        ctx.fillRect(leftPx, toY(score), w, toHeight(score))
-        ctx.fillStyle = '#000'
-        if (1 / bpPerPx > 5) {
-          ctx.fillText(base, leftPx + (rightPx - leftPx) / 2, toY(score) - 2)
+        if (1 / bpPerPx < 5) {
+          ctx.fillRect(leftPx, toY(score), w, toHeight(score))
+        } else {
+          console.log({
+            height: toHeight(score),
+            y: toY(score),
+          })
+          ctx.setTransform(
+            w / 10,
+            0,
+            0,
+            toHeight(score) / 10,
+            leftPx * 2 + (rightPx - leftPx),
+            height + (toY(score) - toHeight(score)), // 1, //toY(score),
+          )
+          // ctx.setTransform(
+          //   1,
+          //   0,
+          //   0,
+          //   1, // toHeight(score) / 10,
+          //   leftPx, // + (rightPx - leftPx) / 2,
+          //   toY(score) - 2,
+          // )
+          ctx.fillText(
+            base,
+            0, // + (rightPx - leftPx) / 2,
+            20,
+            //toY(score) - 2,
+          )
         }
       }
 
