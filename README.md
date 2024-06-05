@@ -34,7 +34,7 @@ Add to the "plugins" of your JBrowse Web config:
   "plugins": [
     {
       "name": "Quantseq",
-      "url": "https://unpkg.com/jbrowse-plugin-quantseq/dist/jbrowse-plugin-seq.umd.production.min.js"
+      "url": "https://unpkg.com/jbrowse-plugin-quantseq/dist/jbrowse-plugin-quantseq.umd.production.min.js"
     }
   ]
 }
